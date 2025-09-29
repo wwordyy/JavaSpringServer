@@ -3,7 +3,6 @@ package com.example.wordy.controller.Customer;
 import com.example.wordy.model.CustomerModel;
 import com.example.wordy.service.CustomerService;
 import com.example.wordy.service.PersonalDateService;
-import com.example.wordy.service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,13 +21,11 @@ public class CustomerController {
 
     public final PersonalDateService personalDateService;
 
-    public final ShopService shopsService;
 
     @Autowired
-    public CustomerController(CustomerService customerService, PersonalDateService personalDateService, ShopService shopsService) {
+    public CustomerController(CustomerService customerService, PersonalDateService personalDateService) {
         this.customerService = customerService;
         this.personalDateService = personalDateService;
-        this.shopsService = shopsService;
     }
 
     @GetMapping("/customers")
@@ -36,7 +33,6 @@ public class CustomerController {
 
         model.addAttribute("customers", customerService.findAll());
         model.addAttribute("personalDates", personalDateService.findAll());
-        model.addAttribute("shops", shopsService.findAll());
 
         model.addAttribute("customer", new CustomerModel());
 
@@ -52,7 +48,6 @@ public class CustomerController {
         try {
             if (bindingResult.hasErrors()) {
                 model.addAttribute("personalDates", personalDateService.findAll());
-                model.addAttribute("shops", shopsService.findAll());
                 return "Customer/customers";
             }
 
@@ -62,7 +57,6 @@ public class CustomerController {
         }
         catch (Exception e) {
             model.addAttribute("personalDates", personalDateService.findAll());
-            model.addAttribute("shops", shopsService.findAll());
             return "redirect:/customers";
         }
 
@@ -80,7 +74,6 @@ public class CustomerController {
         }
 
         CustomerModel customersModel1 = customerService.findById(id);
-        customersModel1.setShops(customersModel.getShops());
         customersModel1.setPersonalDate(customersModel.getPersonalDate());
         customerService.save(customersModel1);
 

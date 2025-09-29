@@ -5,7 +5,6 @@ import com.example.wordy.model.CustomerModel;
 import com.example.wordy.model.PersonalDateModel;
 import com.example.wordy.repository.CustomerRepo;
 import com.example.wordy.repository.PersonalDataRepo;
-import com.example.wordy.repository.ShopRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,13 +19,11 @@ public class PersonalDateService {
 
     private final PersonalDataRepo personalDataRepo;
     private final CustomerRepo customerRepo;
-    private final ShopRepo shopRepo;
 
     @Autowired
-    public PersonalDateService(PersonalDataRepo personalDataRepo, CustomerRepo customerRepo, ShopRepo shopRepo) {
+    public PersonalDateService(PersonalDataRepo personalDataRepo, CustomerRepo customerRepo) {
         this.personalDataRepo = personalDataRepo;
         this.customerRepo = customerRepo;
-        this.shopRepo = shopRepo;
     }
 
     public List<PersonalDateModel> findAll() {
@@ -53,16 +50,11 @@ public class PersonalDateService {
     {
         CustomerModel customer = new CustomerModel(
                 personalDateModel,
-                shopRepo.findById(1).get(),
                 new BasketModel()
         );
 
         customerRepo.save(customer);
 
-
-
-
-        // 1 - const под которой находится магазин Apple (начальная версия, далее можно улучшить)
     }
 
 

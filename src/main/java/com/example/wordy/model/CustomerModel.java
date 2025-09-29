@@ -18,10 +18,6 @@ public class CustomerModel {
     private PersonalDateModel personalDate;
 
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "shop_id", referencedColumnName = "id")
-    @NotNull(message = "Выберите магазин")
-    private ShopsModel shops;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "basket_id", referencedColumnName = "id")
@@ -29,9 +25,8 @@ public class CustomerModel {
     private BasketModel basket;
 
 
-    public CustomerModel(PersonalDateModel personalDate, ShopsModel shops, BasketModel basket) {
+    public CustomerModel(PersonalDateModel personalDate, BasketModel basket) {
         this.personalDate = personalDate;
-        this.shops = shops;
         this.basket = basket;
     }
 
@@ -53,14 +48,6 @@ public class CustomerModel {
         this.personalDate = personalDate;
     }
 
-
-    public ShopsModel getShops() {
-        return shops;
-    }
-
-    public void setShops(ShopsModel shops) {
-        this.shops = shops;
-    }
 
 
     public @NotNull(message = "Необходимо выбрать корзину") BasketModel getBasket() {

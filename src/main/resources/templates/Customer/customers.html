@@ -22,15 +22,6 @@
   <div style="color: red" th:errors="*{personalDate}"></div>
   <br>
 
-  <label>Выберите магазин:</label>
-  <select name="shops" required>
-    <div th:each="shop : ${shops}">
-
-      <option th:value="${shop.id}" th:text="${shop.title}"></option>
-
-    </div>
-  </select>
-  <div style="color: red" th:if="${#fields.hasErrors('shops')}" th:errors="*{shops}"></div>
 
   <button type="submit">Добавить клиента</button>
 </form>
@@ -61,13 +52,6 @@
         </select>
         <br>
 
-        <label>Выберите магазин:</label>
-        <select name="shops">
-          <div th:each="shop : ${shops}">
-            <option th:value="${shop.id}" th:text="${shop.title}"></option>
-
-          </div>
-        </select>
 
 
         <button type="submit">Обновить</button>
