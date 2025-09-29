@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Все чеки</title>
+  <link rel="stylesheet" th:href="@{/CSS/main.css}">
+</head>
+<body>
+<h3>ЧЕКИ</h3>
+
+<form action="/checks/add" method="post" th:object="${check}" class="add">
+
+  <label>Общая цена</label>
+  <input type="number" name="totalPrice" th:field="*{totalPrice}" placeholder="Введите цену" required min="0">
+
+
+  <br>
+
+  <label>Выберите номер заказа</label>
+  <select th:field="*{order}" required>
+    <span th:each="order : ${orders}">
+
+      <option th:value="${order.id}" th:text="${order.numberOrder}"></option>
+    </span>
+
+  </select>
+
+
+  <button type="submit">Добавить чек</button>
+</form>
+
+<form action="/checks/findById" method="post" class="findById">
+  <div>
+    <label for="id">ID чека:</label>
+    <input type="number" id="id" name="id" required="required"/>
+  </div>
+  <button type="submit">Найти чек</button>
+</form>
+
+
+
+<form action="/checks/findByTotalPrice" method="post"  class="findBy">
+  <div>
+    <label for="id">ПОИСК ПО ОБЩЕЙ ЦЕНЕ: <br></label>
+
+
+    <input type="number" name="totalPrice" required="required" placeholder="Введите цену"/>
+
+  </div>
+
+  <button type="submit">Найти</button>
+
+</form>
+
+
+
+
+<ul>
+  <th:block th:each="check : ${checks}">
+    <li>
+      <span th:text="'ID чека: ' + ${check.getId()}"></span>
+
+      <form action="/checks/update" method="post" style="display:inline;" th:object="${check}">
+        <input type="hidden" name="id" th:value="${check.id}"/>
+        <input type="number" name="totalPrice" th:field="*{totalPrice}" placeholder="Общая цена" required>
+
+
+        <select th:field="*{order}" required>
+          <span th:each="order : ${orders}">
+            <option th:value="${order.id}" th:text="${order.numberOrder}"></option>
+          </span>
+
+        </select>
+
+        <button type="submit">Обновить</button>
+      </form>
+
+        <form action="/checks/delete" method="post" style="display:inline;">
+          <input type="hidden" name="id" th:value="${check.getId()}"/>
+          <button type="submit">Удалить</button>
+        </form>
+
+    </li>
+  </th:block>
+
+</ul>
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" th:href="@{/CSS/main.css}">
+</head>
+<body>
+
+<h3>КЛИЕНТЫ</h3>
+
+<form th:action="@{/customers/add}" th:method="POST" th:object="${customer}" class="add">
+
+  <label>Выберите логин:</label>
+  <select name="personalDate" required>
+            <span th:each="personalDate : ${personalDates}">
+                <option th:value="${personalDate.id}" th:text="${personalDate.login}"></option>
+
+            </span>
+  </select>
+
+  <div style="color: red" th:errors="*{personalDate}"></div>
+  <br>
+
+  <label>Выберите магазин:</label>
+  <select name="shops" required>
+    <div th:each="shop : ${shops}">
+
+      <option th:value="${shop.id}" th:text="${shop.title}"></option>
+
+    </div>
+  </select>
+  <div style="color: red" th:if="${#fields.hasErrors('shops')}" th:errors="*{shops}"></div>
+
+  <button type="submit">Добавить клиента</button>
+</form>
+
+
+<form action="/customers/findById" method="post" class="findBy">
+  <div>
+    <label>ПОИСК ПО ID:</label>
+    <input type="number" name="id" required="required"/>
+  </div>
+  <button type="submit">Найти</button>
+</form>
+
+
+<ul>
+  <th:block th:each="customer : ${customers}">
+    <li>
+      <span th:text="'ID клиента ' + ${customer.getIdCustomer()}"></span>
+
+      <form th:action="@{/customers/update}" th:method="POST" style="display:inline;" th:object="${customer}">
+        <input type="hidden" name="id" th:value="${customer.getIdCustomer()}"/>
+        <label>Выберите логин:</label>
+        <select name="personalDate">
+          <div th:each="personalDate : ${personalDates}">
+            <option th:value="${personalDate.id}" th:text="${personalDate.login}"></option>
+          </div>
+
+        </select>
+        <br>
+
+        <label>Выберите магазин:</label>
+        <select name="shops">
+          <div th:each="shop : ${shops}">
+            <option th:value="${shop.id}" th:text="${shop.title}"></option>
+
+          </div>
+        </select>
+
+
+        <button type="submit">Обновить</button>
+      </form>
+
+      <form action="/customers/delete" method="post" style="display:inline;">
+        <input type="hidden" name="id" th:value="${customer.getIdCustomer()}"/>
+        <button type="submit">Удалить</button>
+      </form>
+    </li>
+  </th:block>
+</ul>
+
+
+</body>
+</html>

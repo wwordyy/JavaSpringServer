@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Продукты</title>
+  <link rel="stylesheet" th:href="@{/CSS/main.css}">
+</head>
+<body>
+
+<h3>ПРОДУКТЫ</h3>
+
+<form th:action="@{/products/add}" th:method="POST" th:object="${product}" class="add">
+
+  <label>Цена</label>
+  <br>
+  <input type="number" name="price" th:field="*{price}" placeholder="Введите цену" required>
+
+  <div style="color: red" th:if="${#fields.hasErrors('price')}">
+    <span th:errors="*{price}">Ошибки в описании продукта</span>
+  </div>
+
+  <br>
+  <label>Описание продукта</label>
+  <br>
+  <input type="text" name="productDescription" th:field="*{productDescription}" placeholder="Описание продукта" required>
+
+
+  <div style="color: red" th:if="${#fields.hasErrors('productDescription')}">
+    <span th:errors="*{productDescription}">Ошибки в описании продукта</span>
+  </div>
+
+  <br>
+
+  <label>Выберите тип модели</label>
+  <select th:field="*{model}" required>
+    <span th:each="model : ${models}">
+        <option th:value="${model.id}" th:text="${model.title}"></option>
+    </span>
+
+  </select>
+
+  <br>
+
+  <label>Выберите производителя</label>
+  <select th:field="*{manufacturer}" required>
+    <span th:each="manufacturer : ${manufacturers}">
+        <option th:value="${manufacturer.id}" th:text="${manufacturer.name}"></option>
+    </span>
+
+  </select>
+
+  <br>
+
+
+  <label>Выберите тип продукта</label>
+  <select th:field="*{typeOfProduct}" required>
+    <span th:each="typeOfProduct : ${typeOfProducts}">
+        <option th:value="${typeOfProduct.id}" th:text="${typeOfProduct.title}"></option>
+    </span>
+
+  </select>
+
+
+
+
+  <br>
+  <label>Выберите страну производителя</label>
+  <select th:field="*{country}" required>
+    <span th:each="country : ${countries}">
+        <option th:value="${country.id}" th:text="${country.title}"></option>
+    </span>
+  </select>
+
+
+<!--    <br>-->
+<!--    <label>Выберите количество товаров в корзине</label>-->
+<!--    <select th:field="*{baskets}" required>-->
+<!--    <span th:each="basket : ${baskets}">-->
+<!--        <option th:value="${basket.id}" th:text="${basket.quantity}"></option>-->
+<!--    </span>-->
+
+
+    </select>
+  <br>
+
+  <button type="submit">Добавить продукт</button>
+</form>
+
+
+
+
+
+<form action="/products/findById" method="post" class="findById">
+  <div>
+    <label>ПОИСК ПО ID:</label>
+    <input type="number" name="id" required="required" placeholder="Введите ID"/>
+  </div>
+  <button type="submit">Найти</button>
+</form>
+
+<form action="/products/findByDescription" method="post" class="findBy">
+  <div>
+    <label>ПОИСК ПО ОПИСАНИЮ:</label>
+    <input type="text" name="productDescription" required="required" placeholder="Введите описание"/>
+  </div>
+  <button type="submit">Найти</button>
+</form>
+
+
+
+<ul>
+  <th:block th:each="product : ${products}">
+    <li>
+      <span th:text="'ID продукта: ' + ${product.getId()}"></span>
+
+      <form th:action="@{/products/update}" th:method="POST" th:object="${product}">
+        <input type="hidden" name="id" th:value="${product.getId()}"/>
+
+
+
+        <label>Цена</label>
+        <br>
+        <input type="number" name="price" th:field="*{price}" placeholder="Введите цену" required>
+
+        <div style="color: red" th:if="${#fields.hasErrors('price')}">
+          <span th:errors="*{price}">Ошибки в описании продукта</span>
+        </div>
+
+        <br>
+        <label>Описание продукта</label>
+        <br>
+        <input type="text" name="productDescription" th:field="*{productDescription}" placeholder="Описание продукта" required>
+
+
+        <div style="color: red" th:if="${#fields.hasErrors('productDescription')}">
+          <span th:errors="*{productDescription}">Ошибки в описании продукта</span>
+        </div>
+
+        <br>
+
+        <label>Выберите тип модели</label>
+        <select th:field="*{model}" required>
+            <span th:each="model : ${models}">
+                <option th:value="${model.id}" th:text="${model.title}"></option>
+            </span>
+
+        </select>
+
+        <br>
+
+        <label>Выберите производителя</label>
+        <select th:field="*{manufacturer}" required>
+            <span th:each="manufacturer : ${manufacturers}">
+                <option th:value="${manufacturer.id}" th:text="${manufacturer.name}"></option>
+            </span>
+
+        </select>
+
+        <br>
+
+
+        <label>Выберите тип продукта</label>
+        <select th:field="*{typeOfProduct}" required>
+            <span th:each="typeOfProduct : ${typeOfProducts}">
+                <option th:value="${typeOfProduct.id}" th:text="${typeOfProduct.title}"></option>
+            </span>
+
+        </select>
+
+
+
+
+        <br>
+        <label>Выберите страну производителя</label>
+        <select th:field="*{country}" required>
+           <span th:each="country : ${countries}">
+              <option th:value="${country.id}" th:text="${country.title}"></option>
+          </span>
+
+        </select>
+        <br>
+
+
+<!--        <label>Выберите количество товаров в корзине</label>-->
+<!--        <select th:field="*{baskets}" required>-->
+<!--          <span th:each="basket : ${baskets}">-->
+<!--              <option th:value="${basket.id}" th:text="${basket.quantity}"></option>-->
+<!--          </span>-->
+
+
+<!--        </select>-->
+
+        <br>
+
+
+
+        <button type="submit">Обновить</button>
+
+      </form>
+
+      <form action="/products/delete" method="post" style="display:inline;">
+        <input type="hidden" name="id" th:value="${product.getId()}"/>
+        <button type="submit">Удалить</button>
+      </form>
+
+
+    </li>
+  </th:block>
+</ul>
+
+</body>
+</html>

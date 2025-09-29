@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Типы продуктов</title>
+  <link rel="stylesheet" th:href="@{/CSS/main.css}">
+</head>
+<body>
+
+<h3>ТИПЫ ПРОДУКТОВ</h3>
+
+<form th:action="@{/typeOfProducts/add}" th:method="POST" th:object="${typeOfProduct}" class="add">
+  <label>Название</label>
+  <input type="text" name="title" th:field="*{title}" placeholder="Новое название" required>
+
+  <div style="color: red" th:if="${#fields.hasErrors('title')}">
+    <span th:errors="*{title}">Title errors</span>
+  </div>
+  <br>
+
+  <button type="submit">Добавить тип продукта</button>
+</form>
+
+
+
+<form action="/typeOfProducts/findById" method="post"  class="findById">
+  <div>
+    <label>ПОИСК ПО ID:</label>
+    <input type="number" name="id" required="required" placeholder="Введите ID"/>
+  </div>
+
+  <button type="submit">Найти</button>
+
+</form>
+
+
+
+<form action="/typeOfProducts/findByTitle" method="post"  class="findBy">
+  <div>
+    <label>ПОИСК ПО НАЗВАНИЮ:</label>
+    <input type="text" name="title" required="required" placeholder="Введите название"/>
+  </div>
+
+  <button type="submit">Найти</button>
+
+</form>
+
+<ul>
+  <th:block th:each="typeOfProduct : ${typeOfProducts}">
+    <li>
+      <span th:text="'Номер типа продукта: ' + ${typeOfProduct.getId()}"></span>
+
+      <form th:action="@{/typeOfProducts/update}" th:method="POST" th:object="${typeOfProduct}">
+        <input type="hidden" name="id" th:value="${typeOfProduct.getId()}"/>
+        <input type="text" name="title" th:field="*{title}" placeholder="Введите новое название " required/>
+
+        <div style="color: red" th:if="${#fields.hasErrors('title')}">
+          <span th:errors="*{title}">Title errors</span>
+        </div>
+
+
+
+
+
+        <button type="submit">Обновить</button>
+      </form>
+
+      <form action="/typeOfProducts/delete" method="post" style="display:inline;">
+        <input type="hidden" name="id" th:value="${typeOfProduct.getId()}"/>
+        <button type="submit">Удалить</button>
+      </form>
+    </li>
+  </th:block>
+</ul>
+
+
+
+</body>
+</html>

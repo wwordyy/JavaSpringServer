@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Статусы заказов</title>
+  <link rel="stylesheet" th:href="@{/CSS/main.css}">
+</head>
+<body>
+
+<h3>СТАТУСЫ ЗАКАЗОВ</h3>
+
+
+
+<form th:action="@{/orderStatuses/add}" th:method="POST" th:object="${orderStatus}" class="add">
+  <label>Название</label>
+  <input type="text" name="title" th:field="*{title}" placeholder="Новое название" required>
+
+  <div style="color: red" th:if="${#fields.hasErrors('title')}">
+    <span th:errors="*{title}">Title errors</span>
+  </div>
+  <br>
+
+  <button type="submit">Добавить статус заказа</button>
+</form>
+
+
+
+
+<form action="/orderStatuses/findById" method="post" class="findById">
+  <div>
+    <label>ПОИСК ПО ID:</label>
+    <input type="number" name="id" required="required" placeholder="Введите ID"/>
+  </div>
+
+  <button type="submit">Найти</button>
+</form>
+
+
+
+<form action="/orderStatuses/findByTitle" method="post" class="findByTitle">
+  <div>
+    <label>ПОИСК ПО НАЗВАНИЮ:</label>
+    <input type="text" name="title" required="required" placeholder="Введите название"/>
+  </div>
+
+  <button type="submit">Найти</button>
+</form>
+
+
+
+<ul>
+  <th:block th:each="orderStatus : ${orderStatuses}">
+    <li>
+      <span th:text="'Номер статуса: ' + ${orderStatus.getId()}"></span>
+
+      <form th:action="@{/orderStatuses/update}" th:method="POST" th:object="${orderStatus}">
+        <input type="hidden" name="id" th:value="${orderStatus.getId()}"/>
+        <input type="text" name="title" th:field="*{title}" placeholder="Введите новое название" required/>
+
+        <div style="color: red" th:if="${#fields.hasErrors('title')}">
+          <span th:errors="*{title}">Title errors</span>
+        </div>
+
+        <button type="submit">Обновить</button>
+      </form>
+
+      <form action="/orderStatuses/delete" method="post" style="display:inline;">
+        <input type="hidden" name="id" th:value="${orderStatus.getId()}"/>
+        <button type="submit">Удалить</button>
+      </form>
+    </li>
+  </th:block>
+</ul>
+
+</body>
+</html>
+

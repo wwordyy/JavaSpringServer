@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Производители</title>
+  <link rel="stylesheet" th:href="@{/CSS/main.css}">
+</head>
+<body>
+
+<h3>ПРОИЗВОДИТЕЛИ</h3>
+
+<form th:action="@{/manufacturers/add}" th:method="POST" th:object="${manufacturer}" class="add">
+  <label>Название</label>
+  <input type="text" name="name" th:field="*{name}" placeholder="Новое название" required>
+
+  <div style="color: red" th:if="${#fields.hasErrors('name')}">
+    <span th:errors="*{name}">Title errors</span>
+  </div>
+  <br>
+
+  <button type="submit">Добавить производителя</button>
+</form>
+
+<form action="/manufacturers/findById" method="post" class="findById">
+  <div>
+    <label>ПОИСК ПО ID:</label>
+    <input type="number" name="id" required="required" placeholder="Введите ID"/>
+  </div>
+
+  <button type="submit">Найти</button>
+</form>
+
+<form action="/manufacturers/findByName" method="post" class="findBy">
+  <div>
+    <label>ПОИСК ПО НАЗВАНИЮ:</label>
+    <input type="text" name="name" required="required" placeholder="Введите название"/>
+  </div>
+
+  <button type="submit">Найти</button>
+</form>
+
+<ul>
+  <th:block th:each="manufacturer : ${manufacturers}">
+    <li>
+      <span th:text="'Номер производителя: ' + ${manufacturer.getId()}"></span>
+
+      <form th:action="@{/manufacturers/update}" th:method="POST" th:object="${manufacturer}">
+        <input type="hidden" name="id" th:value="${manufacturer.getId()}"/>
+        <input type="text" name="name" th:field="*{name}" placeholder="Введите новое название" required/>
+
+        <div style="color: red" th:if="${#fields.hasErrors('name')}">
+          <span th:errors="*{name}">Title errors</span>
+        </div>
+
+        <button type="submit">Обновить</button>
+      </form>
+
+      <form action="/manufacturers/delete" method="post" style="display:inline;">
+        <input type="hidden" name="id" th:value="${manufacturer.getId()}"/>
+        <button type="submit">Удалить</button>
+      </form>
+    </li>
+  </th:block>
+</ul>
+
+</body>
+</html>
+

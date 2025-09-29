@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap');
+*{
+    font-family: 'Merriweather', sans-serif; /* Семейство шрифтов */
+    margin: 0; /*Величина оступа от каждого края элемента */
+    padding: 0; /*Внутренний отступ от края элемента до вложенного в него контента */
+    box-sizing: border-box; /*Применяется для изменения для алгоритма рассчета ширина и высоты эелемента*/
+    list-style: none;
+    text-decoration: none;
+    scroll-padding-top: 2rem; /*Верхний отступ в 16 PX*/
+    scroll-behavior: smooth /*Плавная прокрутка*/;
+    z-index: 1000;
+    color: black;
+    font-weight: 500;
+}
+
+
+header{
+    width: 100%;
+    height: 65px;
+    background-color: white;
+    box-shadow: 0 2px 5px rgb(143, 143, 143);
+    justify-content: space-between;
+}
+
+
+.logo img{
+    margin-top: 5px;
+    width: 45px;
+    height: 45px;
+}
+
+.logo{
+    max-block-size: 25px;
+    padding-top: 1px;
+    padding-left: 100px;
+
+}
+
+.categories ul{
+    font-size: 1.25rem;
+    column-gap: 2.2rem;
+    justify-content: center;
+    display: flex;
+    margin-top: -3px;
+
+}
+
+.categories ul li{
+    padding: 1px 7px;
+}
+
+.categories ul li:hover{
+    background-color: rgb(143, 143, 143);
+    border-radius: 1rem;
+    color: white;
+}
+
+.start-page h1{
+    font-family: "Berkshire Swash", serif;
+    font-size: 150px;
+    justify-content: center;
+    line-height: 161px;
+    text-align: center;
+    margin-top: 169px;
+    font-weight: 100;
+}
+
+.start-page p{
+    justify-content: center;
+    text-align: center;
+    font-size: 24px;
+    margin-top: -20px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+
+
+

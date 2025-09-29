@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Заказы</title>
+  <link rel="stylesheet" th:href="@{/CSS/main.css}">
+</head>
+<body>
+
+<h3>ЗАКАЗЫ</h3>
+<form th:action="@{/orders/add}" method="post" th:object="${order}">
+  <label>Номер заказа</label>
+  <input type="text" th:field="*{numberOrder}" required>
+  <br>
+  <div style="color: red" th:if="${#fields.hasErrors('numberOrder')}">
+    <span th:errors="*{numberOrder}">Ошибки в описании продукта</span>
+  </div>
+
+
+
+  <label>Логин клиента</label>
+  <select th:field="*{customer}" required>
+    <span th:each="customer : ${customers}">
+      <option th:value="${customer.idCustomer}" th:text="${customer.personalDate.login}"></option>
+    </span>
+
+  </select>
+
+  <br>
+
+
+  <label>Выберите статус заказа: </label>
+  <select th:field="*{orderStatusId}" required>
+    <span th:each="orderStatus : ${orderStatuses}">
+      <option th:value="${orderStatus.id}" th:text="${orderStatus.title}"></option>
+    </span>
+
+  </select>
+
+<!--  <br>-->
+<!--  <label>Выберите количество заказов в корзине: </label>-->
+
+<!--  <select th:field="*{basketId}" required>-->
+<!--    <span th:each="basket : ${baskets}">-->
+<!--      <option th:value="${basket.id}" th:text="${basket.quantity}"></option>-->
+<!--    </span>-->
+
+<!--  </select>-->
+
+
+  <br>
+
+
+  <button type="submit">Добавить заказ</button>
+</form>
+
+
+<form action="/orders/findById" method="post" class="findById">
+  <div>
+    <label>ПОИСК ПО ID:</label>
+    <input type="number" name="id" required placeholder="Введите ID"/>
+    <button type="submit">Найти</button>
+  </div>
+</form>
+
+<form action="/orders/findByNumberOrder" method="post" class="findByNumber">
+
+  <div>
+    <label>ПОИСК ПО НОМЕРУ ЗАКАЗА:</label>
+    <input type="text" name="numberOrder" required placeholder="Введите номер заказа"/>
+    <button type="submit">Найти</button>
+  </div>
+</form>
+
+
+
+<ul>
+  <th:block th:each="order : ${orders}">
+    <li>
+      <span th:text="'ID заказа: ' + ${order.getId()}"></span>
+
+      <form th:action="@{/orders/update}" th:method="POST" th:object="${order}">
+
+        <input type="hidden" name="id" th:value="${order.getId()}">
+        <label>Номер заказа</label>
+        <input type="text" th:field="*{numberOrder}" placeholder="Введите новый номер" required>
+        <br>
+
+
+
+        <label>Номер клиента</label>
+        <select th:field="*{customer}" required>
+            <span th:each="customer : ${customers}">
+              <option th:value="${customer.idCustomer}" th:text="${customer.idCustomer}"></option>
+            </span>
+        </select>
+
+        <br>
+
+
+        <label>Выберите статус заказа: </label>
+        <select th:field="*{orderStatusId}" required>
+            <span th:each="orderStatus : ${orderStatuses}">
+              <option th:value="${orderStatus.id}" th:text="${orderStatus.title}"></option>
+            </span>
+        </select>
+
+<!--        <br>-->
+<!--        <label>Выберите количество заказов в корзине: </label>-->
+
+<!--        <select th:field="*{basketId}" required>-->
+<!--            <span th:each="basket : ${baskets}">-->
+<!--              <option th:value="${basket.id}" th:text="${basket.quantity}"></option>-->
+<!--            </span>-->
+<!--        </select>-->
+
+        <br>
+
+
+        <button type="submit">Обновить</button>
+      </form>
+
+      <form th:action="@{/orders/delete}" method="post" style="display:inline;">
+        <input type="hidden" name="id" th:value="${order.getId()}"/>
+        <button type="submit">Удалить</button>
+      </form>
+    </li>
+  </th:block>
+</ul>
+
+</body>
+</html>
+

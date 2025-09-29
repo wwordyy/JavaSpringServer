@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Личная информация</title>
+    <link rel="stylesheet" th:href="@{/CSS/main.css}"/>
+</head>
+<body>
+
+<h3>ЛИЧНАЯ ИНФОРМАЦИЯ</h3>
+
+<form th:action="@{/personalDate/add}" th:method="POST" th:object="${personalDate}" class="add">
+    <label>ЛОГИН</label><input type="text" th:field="*{login}" placeholder="Введите новый логин" required>
+    <div style="color: red" th:if="${#fields.hasErrors('login')}">
+        <span th:errors="*{login}">login errors</span>
+    </div>
+    <br>
+
+    <label>ПАРОЛЬ</label><input type="text" th:field="*{password}" placeholder="Введите новый пароль" required>
+    <div style="color: red" th:if="${#fields.hasErrors('password')}">
+        <span th:errors="*{password}">password errors</span>
+    </div>
+    <br>
+    <button type="submit">Добавить личные данные</button>
+</form>
+
+
+
+<form action="/personalDate/findById" method="post"  class="findById">
+    <div>
+        <label for="id">ПОИСК ПО ID:</label>
+        <input type="number" id="id" name="id" required="required" placeholder="Введите ID"/>
+    </div>
+
+    <button type="submit">Найти</button>
+
+</form>
+
+<form action="/personalDate/findByLogin" method="post"  class="findBy">
+    <div>
+        <label for="id">ПОИСК ПО ЛОГИНУ:</label>
+        <input type="text" name="login" required="required" placeholder="Введите логин"/>
+    </div>
+
+    <button type="submit">Найти</button>
+
+</form>
+
+
+
+<ul>
+    <th:block th:each="personalDate : ${personalDates}">
+        <li>
+            <span th:text="'Номер личных данных: ' + ${personalDate.getId()}"></span>
+
+            <form th:action="@{/personalDate/update}" th:method="POST" th:object="${personalDate}">
+                <input type="hidden" name="id" th:value="${personalDate.getId()}" />
+                <input type="text" name="login" th:field="*{login}" placeholder="Введите новый логин" required>
+
+                <div style="color: red" th:if="${#fields.hasErrors('login')}">
+                    <span th:er rors="*{login}">login errors</span>
+                </div>
+
+                <input type="text" name="password" th:field="*{password}" placeholder="Введите новый пароль" required>
+
+                <div style="color: red" th:if="${#fields.hasErrors('password')}">
+                    <span th:errors="*{password}">password errors</span>
+                </div>
+
+                <button type="submit">Обновить</button>
+            </form>
+
+            <form action="/personalDate/delete" method="post" style="display:inline;">
+                <input type="hidden" name="id" th:value="${personalDate.getId()}"/>
+                <button type="submit">Удалить</button>
+            </form>
+        </li>
+    </th:block>
+</ul>
+
+
+
+</body>
+</html>

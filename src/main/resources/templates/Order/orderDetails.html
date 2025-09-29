@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Детали заказа</title>
+</head>
+<body>
+  <p>Номер заказа: <span th:text="${order.numberOrder}"></span></p>
+  <p>Дата создания: <span th:text="${#dates.format(order.getDateCreateOrder(), 'yyyy-MM-dd HH:mm:ss')}"></span></p>
+  <p>Номер клиента: <span th:text="${order.customer.idCustomer}"></span></p>
+  <p>Статус заказа: <span th:text="${order.orderStatusId.title}"></span></p>
+<!--  <p>Количество товаров в корзине: <span th:text="${order.basketId.quantity}"></span></p>-->
+
+
+</body>
+</html>

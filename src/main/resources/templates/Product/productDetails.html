@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Details</title>
+</head>
+<body>
+
+
+<p>Описание: <span th:text="${product.productDescription}"></span></p>
+<p>Цена: <span th:text="${product.price}"></span></p>
+<p>Тип продукта: <span th:text="${product.typeOfProduct.title}"></span></p>
+<p>Производитель: <span th:text="${product.manufacturer.name}"></span></p>
+<p>Модель: <span th:text="${product.model.title}"></span></p>
+<p>Страна производитель: <span th:text="${product.country.title}"></span></p>
+
+</body>
+</html>

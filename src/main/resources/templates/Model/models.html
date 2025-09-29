@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Модели</title>
+  <link rel="stylesheet" th:href="@{/CSS/main.css}">
+</head>
+<body>
+
+<h3>МОДЕЛИ</h3>
+
+<form th:action="@{/models/add}" th:method="POST" th:object="${model}" class="add">
+  <label>Название</label>
+  <input type="text" name="title" th:field="*{title}" placeholder="Новое название" required>
+
+  <div style="color: red" th:if="${#fields.hasErrors('title')}">
+    <span th:errors="*{title}">Title errors</span>
+  </div>
+  <br>
+
+  <button type="submit">Добавить модель</button>
+</form>
+
+<form action="/models/findById" method="post" class="findById">
+  <div>
+    <label>ПОИСК ПО ID:</label>
+    <input type="number" name="id" required="required" placeholder="Введите ID"/>
+  </div>
+
+  <button type="submit">Найти</button>
+</form>
+
+<form action="/models/findByTitle" method="post" class="findBy">
+  <div>
+    <label>ПОИСК ПО НАЗВАНИЮ:</label>
+    <input type="text" name="title" required="required" placeholder="Введите название"/>
+  </div>
+
+  <button type="submit">Найти</button>
+</form>
+
+<ul>
+  <th:block th:each="model : ${models}">
+    <li>
+      <span th:text="'Номер модели: ' + ${model.getId()}"></span>
+
+      <form th:action="@{/models/update}" th:method="POST" th:object="${model}">
+        <input type="hidden" name="id" th:value="${model.getId()}"/>
+        <input type="text" name="title" th:field="*{title}" placeholder="Введите новое название" required/>
+
+        <div style="color: red" th:if="${#fields.hasErrors('title')}">
+          <span th:errors="*{title}">Title errors</span>
+        </div>
+
+        <button type="submit">Обновить</button>
+      </form>
+
+      <form action="/models/delete" method="post" style="display:inline;">
+        <input type="hidden" name="id" th:value="${model.getId()}"/>
+        <button type="submit">Удалить</button>
+      </form>
+    </li>
+  </th:block>
+</ul>
+
+</body>
+</html>

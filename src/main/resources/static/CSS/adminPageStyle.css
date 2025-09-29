@@ -1,0 +1,55 @@
+body {
+    font-family: Forum;
+    background-color: #f4f6f8;
+    margin: 0;
+    padding: 20px;
+}
+
+header h3{
+    font-size: 30px;
+    text-align: center;
+}
+
+main
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30vh;
+    text-align: center;
+}
+
+div {
+    background-color: #fff;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+a {
+    text-decoration: none;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 5px;
+    font-weight: 600;
+    box-shadow: 0 2px 5px rgba(0,123,255,0.4);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    min-width: 100px;
+    text-align: center;
+}
+
+a:hover {
+    background-color: #0056b3;
+    box-shadow: 0 4px 12px rgba(0,86,179,0.6);
+}
+
+a:active {
+    background-color: #003d80;
+}

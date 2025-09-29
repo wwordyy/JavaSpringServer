@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+    <link rel="stylesheet" th:href="@{/CSS/main.css}"/>
+</head>
+<body>
+<h3>Регистрация</h3>
+
+<form th:action="@{/api/registration}" th:method="POST" th:object="${personalDate}" class="add">
+    <label for="login">ЛОГИН</label>
+    <input type="text" th:field="*{login}" id=login placeholder="Введите новый логин" required />
+    <div style="color: red" th:if="${#fields.hasErrors('login')}">
+        <span th:errors="*{login}">login errors</span>
+    </div>
+    <br/>
+
+    <label for="password">ПАРОЛЬ</label>
+    <input type="text" th:field="*{password}" id="password" placeholder="Введите новый пароль" required />
+    <div style="color: red" th:if="${#fields.hasErrors('password')}">
+        <span th:errors="*{password}">password errors</span>
+    </div>
+    <br/>
+    <a href="/auth/login" id="auth">Аутентификация</a>
+    <br/>
+    <br/>
+    <button type="submit" id="registration">Зарегистрироваться</button>
+</form>
+
+</body>
+</html>

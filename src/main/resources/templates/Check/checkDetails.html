@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Детали чека</title>
+</head>
+<body>
+<p>Дата создания чека: <span th:text="${#dates.format(check.checkIssueDate, 'yyyy-MM-dd HH:mm:ss')}"></span></p>
+<p>Общая цена: <span th:text="${check.totalPrice}"></span></p>
+<p>Номер заказа: <span th:text="${check.order.numberOrder}"></span></p>
+</body>
+</html>

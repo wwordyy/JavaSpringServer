@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>КОРЗИНА</title>
+    <link rel="stylesheet" th:href="@{/CSS/main.css}"/>
+</head>
+<body>
+
+<h3>КОРЗИНА</h3>
+
+    <form th:action="@{/baskets/add}" th:method="POST" th:object="${basket}" class="add">
+
+        <br>
+        <label>Выберите товар по названию модели: </label>
+
+        <select th:field="*{products}" required>
+            <span th:each="product : ${products}">
+              <option th:value="${product.id}" th:text="${product.model.title}"></option>
+            </span>
+
+        </select>
+
+
+        <br>
+
+        <label>Количество</label>
+        <input type="number" th:field="*{quantity}" placeholder="Введите количество" required>
+
+        <div style="color: red" th:if="${#fields.hasErrors('quantity')}">
+            <span th:errors="*{quantity}">Quantity errors</span>
+        </div>
+
+        <br>
+
+    <br>
+    <button type="submit">Добавить в корзину</button>
+</form>
+
+
+
+<form action="/baskets/findById" method="post" class="findById">
+    <div>
+        <label for="id">ПОИСК ПО ID:</label>
+        <input type="number" id="id" name="id" required="required" placeholder="Введите ID"/>
+    </div>
+
+    <button type="submit">Найти</button>
+</form>
+
+
+
+<form action="/baskets/findByQuantity" method="post" class="findBy">
+    <div>
+        <label>ПОИСК ПО КОЛИЧЕСТВУ:</label>
+        <input type="number" name="quantity" required="required" placeholder="Введите количество"/>
+    </div>
+
+    <button type="submit">Найти</button>
+</form>
+
+
+<ul>
+  <th:block th:each="basket : ${baskets}">
+    <li>
+        <span th:text="'ID корзины: ' + ${basket.getId()}"></span>
+
+        <form th:action="@{/baskets/update}" th:method="POST" th:object="${basket}">
+            <input type="hidden" name="id" th:value="${basket.getId()}"/>
+
+
+            <label>Выберите товар по названию модели: </label>
+
+            <select th:field="*{products}" required>
+            <span th:each="product : ${products}">
+              <option th:value="${product.id}" th:text="${product.model.title}"></option>
+            </span>
+
+            </select>
+
+
+            <br>
+
+            <input type="number" name="quantity" th:field="*{quantity}" placeholder="Введите новое количество" required/>
+
+            <div style="color: red" th:if="${#fields.hasErrors('quantity')}">
+                <span th:errors="*{quantity}">Quantity errors</span>
+            </div>
+
+            <button type="submit">Обновить</button>
+        </form>
+
+        <form action="/basket/delete" method="post" style="display:inline;">
+            <input type="hidden" name="id" th:value="${basket.getId()}"/>
+            <button type="submit">Удалить</button>
+        </form>
+    </li>
+    </th:block>
+</ul>
+
+
+
+</body>
+</html>
+
