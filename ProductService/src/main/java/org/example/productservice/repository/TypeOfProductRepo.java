@@ -1,6 +1,5 @@
 package org.example.productservice.repository;
 
-import com.example.wordy.model.TypeOfProductModel;
 import org.example.productservice.model.TypeOfProduct;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -1,7 +1,10 @@
-#eureka:
-#  client:
-#    service-url:
-#      defaultZone: http://localhost:8761/eureka/
-#spring:
-#  application:
-#    name: user-service
+spring:
+  application:
+    name: user-service
+  profiles:
+    active: default
+  config:
+    import: "configserver:http://localhost:8888"
+  cloud:
+    config:
+      fail-fast: true

@@ -20,7 +20,7 @@ public class OrderStatus {
     private String title;
 
 
-    @OneToMany(mappedBy = "orderStatus", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "status", cascade = CascadeType.ALL)
     private List<Order> orders;
 
 
